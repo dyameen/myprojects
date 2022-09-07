@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+</head>
+<body style="text-align:center">
+<center>
+<pre>
+        <h1>Send Mail</h1>
+<div class="container">
+        <form action = '' method="POST" class="contact_form">
+            <!-- Very Important csrf Token -->
+            {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" name="register">
+
+            <h2>{{ html }}</h2>
+        </form>
+</div>
+
+</pre>
+</center>
+</body>
+</html>

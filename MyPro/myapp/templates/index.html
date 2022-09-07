@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index Page</title>
+</head>
+<body>
+<h1>Users</h1>
+
+<table border="1">
+    <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Password</th>
+        <th>Delete</th>
+  </tr>
+{% for x in myuser %}
+<tr>
+<td><a href="update/{{ x.id }}">{{ x.id }}</a></td>
+<td>{{ x.username}}</td>
+<td>{{ x.password }}</td>
+    <td><a href="delete/{{ x.id }}">delete</a></td>
+</tr>
+{% endfor %}
+</table>
+<p>
+<a href="add/">Add User</a>
+</p>
+</body>
+</html>

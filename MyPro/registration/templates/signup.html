@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign-up Page</title>
+</head>
+<body style="text-align:center">
+<center>
+<pre>
+        <h1>Registration Form</h1>
+
+        <form action = '' method="POST">
+            <!-- Very Important csrf Token -->
+            {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" name="register">
+
+            <h2>{{ html }}</h2>
+    </form>
+</pre>
+</center>
+</body>
+</html>
