@@ -88,7 +88,8 @@
 
                 <br><br>
                 <div class="container">
-                            <h2 class="ribbon">Attendance Details of {{emp}} : {{emp.designation}}</h2>
+                        <div>
+                        <h2 class="ribbon">Attendance Details of {{emp}} : {{emp.designation}}</h2>
                             <br>
                             <h3 class="ribbon1">( Total Working Hours = {{twh}} )</h3>
                         {% if messages %}
@@ -96,7 +97,15 @@
                                 <small {% if message.tags %} class="{{message.tags}}" {%endif%}>{{message}}</small>
                             {%endfor%}
                         {%endif%}
+                        </div>
                     <br>
+                    <div style="margin :10%;">
+                        <form method="POST">
+                            {%csrf_token%}
+                        From:<input type="date" name="fromdate"/>
+                        To:<input type="date" name="todate"/>
+                        <br><br><input class="det1" type="submit" value="Filter"/>
+                    </div>
                     <div style="overflow-x: auto;">
                     <table class="styled-table" border="1">
                             <tr>
@@ -120,8 +129,11 @@
                             </tr>
                             {% endfor %}
                         </table>
+                        </form>
+
                     </div>
                         <br>
+                    <div>
                         <form  method="POST" novalidate>
                                     <!-- Very Important csrf Token -->
                                     {% csrf_token %}
@@ -131,6 +143,7 @@
                                 <br>
                                 <a class="det1" href="/att_sys/hrprofile/">Back</a>
                         </form>
+                    </div>
                 </div>
             </section>
         </main>
@@ -162,7 +175,7 @@
                         <p class="text-white mb-1">
                         513,Ratanjali Square, Anand Nagar, Near Gloria Restaurant, Ahmedabad.</p>
 
-                        <p class="text-white mb-1"><a href="mailto:email@company.com" class="footer-link">info@shelsoft.com</a><p>
+                        <p class="text-white mb-1"><a href="mailto:email@company.com" class="footer-link">contact@sheltersoft.in</a><p>
                     </div>
 
                     <div class="site-footer-bottom mt-5">
@@ -173,15 +186,10 @@
 
                             <div class="col-lg-6 col-6 ">
                                 <ul class="social-icon">
-                                    <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+                                    <li><a href="https://www.facebook.com/sheltersoft/" class="social-icon-link bi-facebook"></a></li>
 
-                                    <li><a href="#" class="social-icon-link bi-twitter"></a></li>
+                                    <li><a href="linkedin.com/in/shelter-soft-97952820a" class="social-icon-link bi-linkedin"></a></li>
 
-                                    <li><a href="#" class="social-icon-link bi-instagram"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-linkedin"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-youtube"></a></li>
                                 </ul>
                             </div>
                         </div>

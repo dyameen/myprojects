@@ -88,19 +88,36 @@
 
                 <br><br>
                 <div class="container">
+                    <div>
                     <h2 class="ribbon">Welcome {{emp}} : {{emp.designation}}</h2>
                     <br>
                     <h3 class="ribbon1">Employee list</h3>
                     <br>
-                    <a style="float:auto "class="det1" href="/att_sys/userpersonal/add/">Add Attendance</a>
+                    <a style="float:auto" class="det1" href="/att_sys/userpersonal/add/">Add Attendance</a>
+                    </div>
+                    <div style="float:right">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <select name="role">
+                                    <option value="" selected="selected">All</option>
+                                    {% for i in designation %}
+                                    <option value={{i}}>{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            <button class="det" type="submit">Filter</button>
+                        </form>
+                    </div>
+                    <br>
 
+
+                    <div>
                     {% if messages %}
                         {% for message in messages %}
                             <small {% if message.tags %} class="{{message.tags}}" {%endif%}>{{message}}</small>
                         {%endfor%}
                     {%endif%}
                     <br>
-
+                    </div>
                     <div style="overflow-x: auto;">
                     <table class= "styled-table" border="1">
                         <tr>
@@ -119,6 +136,7 @@
                         {% endfor %}
                     </table>
                     </div>
+
                 </div>
             </section>
         </main>
@@ -150,7 +168,7 @@
                         <p class="text-white mb-1">
                         513,Ratanjali Square, Anand Nagar, Near Gloria Restaurant, Ahmedabad.</p>
 
-                        <p class="text-white mb-1"><a href="mailto:email@company.com" class="footer-link">info@shelsoft.com</a><p>
+                        <p class="text-white mb-1"><a href="mailto:email@company.com" class="footer-link">contact@sheltersoft.in</a><p>
                     </div>
 
                     <div class="site-footer-bottom mt-5">
@@ -161,15 +179,10 @@
 
                             <div class="col-lg-6 col-6 ">
                                 <ul class="social-icon">
-                                    <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+                                    <li><a href="https://www.facebook.com/sheltersoft/" class="social-icon-link bi-facebook"></a></li>
 
-                                    <li><a href="#" class="social-icon-link bi-twitter"></a></li>
+                                    <li><a href="linkedin.com/in/shelter-soft-97952820a" class="social-icon-link bi-linkedin"></a></li>
 
-                                    <li><a href="#" class="social-icon-link bi-instagram"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-linkedin"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-youtube"></a></li>
                                 </ul>
                             </div>
                         </div>

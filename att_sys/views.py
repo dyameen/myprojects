@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render
 from django.template.defaulttags import register
 from django.urls import reverse
@@ -59,18 +60,53 @@ def logout_profile(request):
     return render(request, "index.html")
 
 
+# @csrf_exempt
+# @login_required(login_url="/att_sys/login/")
+# def hr_profile(request):
+#     user = Employee.objects.exclude(id=1)
+#     designation = set()
+#     for i in user:
+#         designation.add(i.designation)
+#     designation = list(designation)
+#     emp = Employee.objects.get(user = request.user.id)
+#     print(user)
+#     print("In HR profile")
+#     context = {
+#         'user': user,
+#         'emp': emp,
+#         "designation":designation,
+#     }
+#     return render(request, "hrprofile.html", context)
+
 @csrf_exempt
 @login_required(login_url="/att_sys/login/")
 def hr_profile(request):
     user = Employee.objects.exclude(id=1)
     emp = Employee.objects.get(user = request.user.id)
-    print(user)
-    print("In HR profile")
-    context = {
-        'user': user,
-        'emp': emp,
-    }
-    return render(request, "hrprofile.html", context)
+    designation = set ()
+    for i in user:
+        designation.add (i.designation)
+    designation = list (designation)
+    print (designation)
+    if request.method == "POST":
+        role = request.POST['role']
+        print(role)
+        if role:
+            user = Employee.objects.filter(designation = role)
+            context = {
+                'user': user,
+                'designation':designation,
+                'emp': emp,
+             }
+            return render (request,'hrprofile.html',context)
+        else:
+            return render(request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp})
+
+    elif request.method == 'GET':
+        return render (request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp})
+    else:
+        return HttpResponse('An Exception Occurred')
+
 
 
 @login_required(login_url="/att_sys/login/")
@@ -95,7 +131,20 @@ def user_profile(request,id):
         'dwh': dwh,
         'twh': twh,
     }
-    return render(request, "userprofile.html", context)
+    if request.method =="POST":
+        fromdate = request.POST['fromdate']
+        todate = request.POST['todate']
+        print(fromdate,todate)
+        user = Attendance.objects.filter(Q(date__lte=fromdate) & Q(date__gte=todate))
+        print(user,'--------------------------------------')
+        context['user'] = user
+        print(context)
+        return render(request, "userprofile.html", context)
+    else:
+        context['user'] = user
+
+        return render(request, "userprofile.html", context)
+
 
 @login_required(login_url="/att_sys/login/")
 def update(request,id):
@@ -191,4 +240,14 @@ def user_personal(request,id):
         return render(request, "userpersonal.html", context)
     else:
         return HttpResponseRedirect('/att_sys/login/')
+
+
+@login_required(login_url="/att_sys/login/")
+def filter_emp(request):
+        return render (request,'hrprofile.html')
+
+
+
+
+
 

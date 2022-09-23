@@ -32,7 +32,7 @@ class Employee(models.Model):
 
 class Attendance(models.Model):
     employee = models.ForeignKey(Employee,on_delete = models.CASCADE, related_name = 'emp_attendance')
-    date = models.DateField(default = datetime.date.today())
+    date = models.DateField(default = datetime.date.today(),null=True)
     chin = models.TimeField()
     chout = models.TimeField()
     remarks = models.CharField(max_length = 255,blank = True)
