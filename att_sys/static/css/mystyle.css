@@ -219,7 +219,7 @@
           caret-color: red;
         }
 
-        .body {
+        .loginbody{
           margin: 0;
           width: 100vw;
           height: 100vh;
@@ -231,7 +231,7 @@
           font-family: poppins;
         }
 
-        .container {
+        .container2 {
           position: relative;
           margin: auto;
           width: 250px;

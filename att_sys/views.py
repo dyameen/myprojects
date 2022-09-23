@@ -1,19 +1,19 @@
 from datetime import datetime
+from django.contrib.auth.decorators import login_required,permission_required
 from django.contrib import messages
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.template import loader
-from django.urls import reverse
-from .models import *
-from . import forms
+from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.template.defaulttags import register
+from django.urls import reverse
 # from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import DurationField,ExpressionWrapper,F,IntegerField,Value,Sum
-from django.db.models.functions import Coalesce
 
-from django.template.defaulttags import register
+from . import forms
+from .models import *
+
 ...
 @register.filter
 def get_item(dictionary, key):
@@ -57,6 +57,7 @@ def logout_profile(request):
 
 
 @csrf_exempt
+@login_required(login_url="/att_sys/login/")
 def hr_profile(request):
     user = Employee.objects.exclude(id=1)
     emp = Employee.objects.get(user = request.user.id)
@@ -69,6 +70,7 @@ def hr_profile(request):
     return render(request, "hrprofile.html", context)
 
 
+@login_required(login_url="/att_sys/login/")
 def user_profile(request,id):
     print("In User profile")
     user = Attendance.objects.filter(employee_id = id).order_by('date')
@@ -92,7 +94,7 @@ def user_profile(request,id):
     }
     return render(request, "userprofile.html", context)
 
-
+@login_required(login_url="/att_sys/login/")
 def update(request,id):
     print ("In Update")
     att = Attendance.objects.get(id = id)
@@ -115,19 +117,19 @@ def update(request,id):
         print(fm)
     return render(request,"update.html",{'name': request.user,'form': fm , 'id_user':id_user})
 
-
+@login_required(login_url="/att_sys/login/")
 def success(request, id):
     user = Employee.objects.get(id=id)
     print("In success")
     return render(request, "success.html",{'user':user})
 
-
+@login_required(login_url="/att_sys/login/")
 def delete(request, id):
     user = Employee.objects.get(id=id)
     user.delete()
     return HttpResponseRedirect(reverse('hrprofile'))
 
-
+@login_required(login_url="/att_sys/login/")
 def delete_att(request,id):
     att = Attendance.objects.get(id=id)
     id_user = att.employee.id
@@ -135,9 +137,10 @@ def delete_att(request,id):
     att.delete()
     return HttpResponseRedirect(f'/att_sys/hrprofile/userprofile/{id_user}/')
 
-
+@login_required(login_url="/att_sys/login/")
 def add(request):
     emp = Employee.objects.get(user = request.user)
+    print(emp.user.role)
     if request.method == "POST":
         fm = forms.Add(request.POST)
         print(fm)
@@ -157,27 +160,32 @@ def add(request):
     return render (request,"add.html",{'name': request.user,'form': fm ,'emp':emp})
 
 
+@login_required(login_url="/att_sys/login/")
 def user_personal(request,id):
     emp = Employee.objects.get(user = request.user)
-    print("In User profile")
-    user = Attendance.objects.filter(employee_id = id).order_by('date')
-    print(user,"--------->")
-    dwh = {}
-    for i in user:
-        t1 = i.chin
-        t2 = i.chout
-        t1_datetime = datetime.datetime.combine(datetime.datetime.today (),t1)
-        t2_datetime = datetime.datetime.combine(datetime.datetime.today (),t2)
-        diff = t2_datetime - t1_datetime
-        wh = int (diff.total_seconds() / 3600)
-        dwh[i.id] = wh
-    twh = sum (dwh.values ())
+    if emp.id==id:
+        print("In User profile")
+        user = Attendance.objects.filter(employee_id = id).order_by('date')
+        print(user,"--------->")
+        dwh = {}
+        for i in user:
+            t1 = i.chin
+            t2 = i.chout
+            t1_datetime = datetime.datetime.combine(datetime.datetime.today (),t1)
+            t2_datetime = datetime.datetime.combine(datetime.datetime.today (),t2)
+            diff = t2_datetime - t1_datetime
+            wh = int (diff.total_seconds() / 3600)
+            dwh[i.id] = wh
+        twh = sum (dwh.values ())
 
-    context = {
-        'user': user,
-        'name': request.user,
-        'emp': emp,
-        'dwh': dwh,
-        'twh': twh,
-    }
-    return render(request, "userpersonal.html", context)
+        context = {
+            'user': user,
+            'name': request.user,
+            'emp': emp,
+            'dwh': dwh,
+            'twh': twh,
+        }
+        return render(request, "userpersonal.html", context)
+    else:
+        return HttpResponseRedirect('/att_sys/login/')
+
