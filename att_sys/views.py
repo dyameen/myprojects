@@ -29,19 +29,22 @@ def loginform(request):
     if request.method == "POST":
         fm = AuthenticationForm(request=request, data=request.POST)
         if fm.is_valid():
-            print('enter')
+            print('Form is valid')
             un = fm.cleaned_data['username']
             pwd = fm.cleaned_data['password']
             user = authenticate(username=un, password=pwd)
             if user is not None:
+                print("User id is", user.id)
                 login(request, user)
-                emp = Employee.objects.get(user = request.user.id)
+                print("After login User role is", user.role)
+                print(request.user.role)
                 messages.success(request, "login Successful!")
                 if request.user.role == "Admin":
                     return HttpResponseRedirect('/admin/')
                 elif request.user.role == "HR":
                     return HttpResponseRedirect('/att_sys/hrprofile/')
                 else:
+                    emp = Employee.objects.get (user = request.user.id)
                     return HttpResponseRedirect(f"/att_sys/userpersonal/{emp.id}")
     else:
         fm = AuthenticationForm()

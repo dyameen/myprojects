@@ -313,7 +313,7 @@ button:focus:not(:focus-visible) {
   transition: background 0.2s linear;
   position: fixed;
   box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
-
+  background-color:white;
 
 }
 
@@ -1139,5 +1139,8 @@ h2 {
     font-size: 0.714em;
   }
 
+}
+span {
+  content: "\2709";
 }
 
