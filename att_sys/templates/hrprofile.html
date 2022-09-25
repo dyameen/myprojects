@@ -93,10 +93,9 @@
                     <br>
                     <h3 class="ribbon1">Employee list</h3>
                     <br>
-                    <a style="float:auto" class="det1" href="/att_sys/userpersonal/add/">Add Attendance</a>
                     </div>
-                    <div style="float:right">
-                        <form action="" method="POST">
+                    <div class="div1" >
+                        <form action=""  method="POST">
                             {% csrf_token %}
                             <select name="role">
                                     <option value="" selected="selected">All</option>
@@ -104,12 +103,10 @@
                                     <option value={{i}}>{{i}}</option>
                                     {% endfor %}
                                 </select>
-                            <button class="det" type="submit">Filter</button>
+                            <button class="det1" type="submit">Filter</button>
                         </form>
+                         <a class="det1" style="margin-left:850px" href="/att_sys/userpersonal/add/">Add Attendance</a>
                     </div>
-                    <br>
-
-
                     <div>
                     {% if messages %}
                         {% for message in messages %}
@@ -118,7 +115,7 @@
                     {%endif%}
                     <br>
                     </div>
-                    <div style="overflow-x: auto;">
+                    <div style="overflow-x: auto; margin: auto;">
                     <table class= "styled-table" border="1">
                         <tr>
                             <th>ID</th>

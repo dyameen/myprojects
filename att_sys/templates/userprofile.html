@@ -99,12 +99,13 @@
                         {%endif%}
                         </div>
                     <br>
-                    <div style="margin :10%;">
-                        <form method="POST">
+                    <div>
+                        <form  class="inline" method="POST">
                             {%csrf_token%}
                         From:<input type="date" name="fromdate"/>
                         To:<input type="date" name="todate"/>
                         <br><br><input class="det1" type="submit" value="Filter"/>
+                        </form>
                     </div>
                     <div style="overflow-x: auto;">
                     <table class="styled-table" border="1">
@@ -129,21 +130,11 @@
                             </tr>
                             {% endfor %}
                         </table>
-                        </form>
+
 
                     </div>
                         <br>
-                    <div>
-                        <form  method="POST" novalidate>
-                                    <!-- Very Important csrf Token -->
-                                    {% csrf_token %}
-                                <table>
-                                    {{ form.as_p }}
-                                </table>
-                                <br>
-                                <a class="det1" href="/att_sys/hrprofile/">Back</a>
-                        </form>
-                    </div>
+                        <a class="det1" href="/att_sys/hrprofile/">Back</a>
                 </div>
             </section>
         </main>

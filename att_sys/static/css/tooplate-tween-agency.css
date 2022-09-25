@@ -1001,146 +1001,152 @@ button:focus:not(:focus-visible) {
           box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
         }
 
-/*almost everything here is em based*/
-@import url(https://fonts.googleapis.com/css?family=Crete+Round);
+        /*almost everything here is em based*/
+        @import url(https://fonts.googleapis.com/css?family=Crete+Round);
 
-html{
-  font-size:1em;
-  background: #825582;
-}
+        html{
+          font-size:1em;
+          background: #825582;
+        }
 
-h2 {
-  font-family: 'Crete Round', serif;
-}
+        h2 {
+          font-family: 'Crete Round', serif;
+        }
 
-.ribbon{
-  position:relative;
-  padding: 0 0.5em;
-  font-size:2.000em;
-  margin: 0 0 0 -0.625em;
-  line-height: 1.875em;
-  color: #e6e2c8;
-  border-radius: 0 0.156em 0.156em 0;
-  background: rgb(123, 159, 199);
-  box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
-}
+        .ribbon{
+          position:relative;
+          padding: 0 0.5em;
+          font-size:2.000em;
+          margin: 0 0 0 -0.625em;
+          line-height: 1.875em;
+          color: #e6e2c8;
+          border-radius: 0 0.156em 0.156em 0;
+          background: rgb(123, 159, 199);
+          box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
+        }
 
-.ribbon:before, .ribbon:after{
-  position:absolute;
-  content: '';
-  display: block;
-}
+        .ribbon:before, .ribbon:after{
+          position:absolute;
+          content: '';
+          display: block;
+        }
 
-.ribbon:before{
-  width: 0.469em;
-  height: 100%;
-  padding: 0 0 0.438em;
-  top:0;
-  left: -0.469em;
-  background:inherit;
-  border-radius: 0.313em 0 0 0.313em;
-}
-
-
-@media (max-width: 600px) {
-
-  .ribbon{
-    line-height: 1.143em;
-    padding: 0.5em;
-  }
-
-  .ribbon:before, {
-    font-size: 0.714em;
-  }
-
-}
-
-.ribbon1{
-  position:relative;
-  padding: 0 0.5em;
-  font-size:2.000em;
-  margin: 0 0 0 -0.625em;
-  line-height: 1.875em;
-  color: #e6e2c8;
-  border-radius: 0 0.156em 0.156em 0;
-  background: rgb(255, 000, 000);
-  box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
-}
+        .ribbon:before{
+          width: 0.469em;
+          height: 100%;
+          padding: 0 0 0.438em;
+          top:0;
+          left: -0.469em;
+          background:inherit;
+          border-radius: 0.313em 0 0 0.313em;
+        }
 
 
-.ribbon1:before, .ribbon:after{
-  position:absolute;
-  content: '';
-  display: block;
-}
+        @media (max-width: 600px) {
 
-.ribbon1:before{
-  width: 0.469em;
-  height: 100%;
-  padding: 0 0 0.438em;
-  top:0;
-  left: -0.469em;
-  background:inherit;
-  border-radius: 0.313em 0 0 0.313em;
-}
+          .ribbon{
+            line-height: 1.143em;
+            padding: 0.5em;
+          }
 
+          .ribbon:before, {
+            font-size: 0.714em;
+          }
 
-@media (max-width: 600px) {
+        }
 
-  .ribbon1{
-    line-height: 1.143em;
-    padding: 0.5em;
-  }
-
-  .ribbon1:before, {
-    font-size: 0.714em;
-  }
-
-}
-
-.ribbon2{
-  position:relative;
-  padding: 0 0.5em;
-  font-size:14px;
-  margin: 0 0 0 -0.625em;
-  line-height: 1.875em;
-  color: #e6e2c8;
-  border-radius: 0 0.156em 0.156em 0;
-  background: #009879;
-  box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
-}
+        .ribbon1{
+          position:relative;
+          padding: 0 0.5em;
+          font-size:2.000em;
+          margin: 0 0 0 -0.625em;
+          line-height: 1.875em;
+          color: #e6e2c8;
+          border-radius: 0 0.156em 0.156em 0;
+          background: rgb(255, 000, 000);
+          box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
+        }
 
 
-.ribbon2:before, .ribbon:after{
-  position:absolute;
-  content: '';
-  display: block;
-}
+        .ribbon1:before, .ribbon:after{
+          position:absolute;
+          content: '';
+          display: block;
+        }
 
-.ribbon2:before{
-  width: 0.469em;
-  height: 100%;
-  padding: 0 0 0.438em;
-  top:0;
-  left: -0.469em;
-  background:inherit;
-  border-radius: 0.313em 0 0 0.313em;
-}
+        .ribbon1:before{
+          width: 0.469em;
+          height: 100%;
+          padding: 0 0 0.438em;
+          top:0;
+          left: -0.469em;
+          background:inherit;
+          border-radius: 0.313em 0 0 0.313em;
+        }
 
 
-@media (max-width: 600px) {
+        @media (max-width: 600px) {
 
-  .ribbon2{
-    line-height: 1.143em;
-    padding: 0.5em;
-  }
+          .ribbon1{
+            line-height: 1.143em;
+            padding: 0.5em;
+          }
 
-  .ribbon2:before, {
-    font-size: 0.714em;
-  }
+          .ribbon1:before, {
+            font-size: 0.714em;
+          }
 
-}
-span {
-  content: "\2709";
-}
+        }
 
+        .ribbon2{
+          position:relative;
+          padding: 0 0.5em;
+          font-size:14px;
+          margin: 0 0 0 -0.625em;
+          line-height: 1.875em;
+          color: #e6e2c8;
+          border-radius: 0 0.156em 0.156em 0;
+          background: #009879;
+          box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
+        }
+
+
+        .ribbon2:before, .ribbon:after{
+          position:absolute;
+          content: '';
+          display: block;
+        }
+
+        .ribbon2:before{
+          width: 0.469em;
+          height: 100%;
+          padding: 0 0 0.438em;
+          top:0;
+          left: -0.469em;
+          background:inherit;
+          border-radius: 0.313em 0 0 0.313em;
+        }
+
+
+        @media (max-width: 600px) {
+
+          .ribbon2{
+            line-height: 1.143em;
+            padding: 0.5em;
+          }
+
+          .ribbon2:before, {
+            font-size: 0.714em;
+          }
+
+        }
+
+        .inline{
+          display: inline-flex;
+
+        }
+
+        .div1{
+           display: -webkit-inline-box;
+           float:auto;
+        }

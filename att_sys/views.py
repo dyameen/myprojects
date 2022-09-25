@@ -83,10 +83,10 @@ def logout_profile(request):
 def hr_profile(request):
     user = Employee.objects.exclude(id=1)
     emp = Employee.objects.get(user = request.user.id)
-    designation = set ()
+    designation = set()
     for i in user:
-        designation.add (i.designation)
-    designation = list (designation)
+        designation.add(i.designation)
+    designation = list(designation)
     print (designation)
     if request.method == "POST":
         role = request.POST['role']
@@ -106,7 +106,6 @@ def hr_profile(request):
         return render (request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp})
     else:
         return HttpResponse('An Exception Occurred')
-
 
 
 @login_required(login_url="/att_sys/login/")
@@ -135,14 +134,13 @@ def user_profile(request,id):
         fromdate = request.POST['fromdate']
         todate = request.POST['todate']
         print(fromdate,todate)
-        user = Attendance.objects.filter(Q(date__lte=fromdate) & Q(date__gte=todate))
+        user = Attendance.objects.filter(Q(employee_id = id) & Q(date__gte=fromdate) & Q(date__lte=todate)).order_by('date')
         print(user,'--------------------------------------')
         context['user'] = user
         print(context)
         return render(request, "userprofile.html", context)
     else:
         context['user'] = user
-
         return render(request, "userprofile.html", context)
 
 
