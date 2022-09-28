@@ -1,5 +1,4 @@
 import datetime
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -33,6 +32,6 @@ class Employee(models.Model):
 class Attendance(models.Model):
     employee = models.ForeignKey(Employee,on_delete = models.CASCADE, related_name = 'emp_attendance')
     date = models.DateField(default = datetime.date.today(),null=True)
-    chin = models.TimeField()
-    chout = models.TimeField()
+    chin = models.TimeField(null = True, blank=True)
+    chout = models.TimeField(null = True, blank=True)
     remarks = models.CharField(max_length = 255,blank = True)

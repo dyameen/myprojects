@@ -27,13 +27,23 @@ class Update (forms.ModelForm):
             'chout': 'Check-out Time:',
         }
 
+def check_chin(value):
+    if value == ' ':
+        raise forms.ValidationError ("Invalid Check-In Time.")
+
+
+def check_chout(value):
+
+    if value == ' ':
+        raise forms.ValidationError ("Invalid Check-Out Time.")
+
 
 class Add (forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ('date','chin','chout')
         widgets = {
-            'date': forms.DateInput (attrs = {'type': 'date'}),
+            'date': forms.DateInput (attrs = {'type': 'date','readonly':'True'}),
             'chin': forms.TimeInput (attrs = {'type': 'time'}),
             'chout': forms.TimeInput (attrs = {'type': 'time'}),
         }
@@ -42,3 +52,4 @@ class Add (forms.ModelForm):
             'chin': 'Check-in Time:',
             'chout': 'Check-out Time:',
         }
+

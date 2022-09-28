@@ -93,9 +93,7 @@
                 <br><br>
                 <div class="container2">
                     <form method="POST" novalidate>
-            <!-- Very Important csrf Token -->
                         {% csrf_token %}
-
                         {% for fm in form %}
                         {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} <br><br>
                         {% endfor %}

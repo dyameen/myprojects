@@ -87,7 +87,7 @@
             <section class="services section-padding" id="section_3">
 
                 <br><br>
-                <div class="container4">
+                <div class="container3">
                             <h2 class="">Add Attendance:</h2>
                             <h3>{{emp}}</h3>
 
@@ -100,9 +100,37 @@
                             <form  method="POST" novalidate>
                                         <!-- Very Important csrf Token -->
                                         {% csrf_token %}
-                                        {{ form.as_p}}
+                                        {% for fm in form %}
+
+                                        {% if att|length == 0 %}
+                                            {% if fm.name == 'date' %}
+                                                {{fm.label}}{{fm}}
+
+                                            {% elif fm.name == 'chin' %}
+                                                {{fm.label}}{{fm}}
+
+                                            {% endif %}
+                                        {% else %}
+                                            {% if fm.name == 'date' %}
+                                                {{fm.label}}{{fm}}
+
+                                            {% elif fm.name == 'chout' %}
+                                                {{fm.label}}{{fm}}
+
+                                            {% endif %}
+
+                                        {% endif %}
+
+                                        {% endfor %}
+                                <br><br>
                                     <button class="button" type="submit">Submit</button>
                             </form>
+<!--                            <form  method="POST" novalidate>-->
+<!--                                        &lt;!&ndash; Very Important csrf Token &ndash;&gt;-->
+<!--                                        {% csrf_token %}-->
+<!--                                        {{ form.as_p}}-->
+<!--                                    <button class="button" type="submit">Submit</button>-->
+<!--                            </form>-->
                             <br>
                             {% if user.role == 'HR' %}
                             <a class="det1" href="/att_sys/hrprofile/">Back</a>

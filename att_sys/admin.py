@@ -14,7 +14,7 @@ class EmployeeAdmin (admin.ModelAdmin):
 
 @admin.register (Attendance)
 class AttAdmin (admin.ModelAdmin):
-    list_display = ('id','employee','chin','chout')
+    list_display = ('id','employee','date','chin','chout')
 
 
 

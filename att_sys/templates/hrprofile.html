@@ -13,6 +13,7 @@
 
         <title>HR Profile</title>
 
+
         <!-- CSS FILES -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -32,6 +33,8 @@
     </head>
 
     <body>
+
+
         <nav class="navbar fixed-top navbar-expand-lg sticky-nav ">
             <div class="container">
 
@@ -105,7 +108,11 @@
                                 </select>
                             <button class="det1" type="submit">Filter</button>
                         </form>
-                         <a class="det1" style="margin-left:850px" href="/att_sys/userpersonal/add/">Add Attendance</a>
+                        {% if att|length == 0 %}
+                         <a class="det1" style="margin-left:850px" href="/att_sys/userpersonal/add/">Check-in</a>
+                        {%else%}
+                        <a class="det1" style="margin-left:850px" href="/att_sys/userpersonal/add/">Check-out</a>
+                        {%endif%}
                     </div>
                     <div>
                     {% if messages %}
@@ -114,6 +121,7 @@
                         {%endfor%}
                     {%endif%}
                     <br>
+
                     </div>
                     <div style="overflow-x: auto; margin: auto;">
                     <table class= "styled-table" border="1">
