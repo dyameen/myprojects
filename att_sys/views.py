@@ -28,12 +28,12 @@ def index(request):
 
 @csrf_exempt
 def loginform(request):
-
+    print('In loginform =====>')
     if request.method == "POST":
         print('In Login if =====>')
         fm = AuthenticationForm(request=request, data=request.POST)
         if fm.is_valid():
-            print('Form is valid  =====>')
+            print('LoginForm is valid  =====>')
             un = fm.cleaned_data['username']
             pwd = fm.cleaned_data['password']
             user = authenticate(username=un, password=pwd)
@@ -80,7 +80,7 @@ def logout_profile(request):
 @csrf_exempt
 @login_required(login_url="/att_sys/login/")
 def hr_profile(request):
-    session = request.session['count']
+    print('In hr_profile =====>')
     user = Employee.objects.exclude(id=1)
     emp = Employee.objects.get(user = request.user.id)
     today = datetime.datetime.now ().date ()
@@ -89,8 +89,7 @@ def hr_profile(request):
     for i in user:
         designation.add(i.designation)
     designation = list(designation)
-    print (designation)
-    print('session :--------',request.session.get('count'))
+    print ('Designation =====>',designation)
     if request.method == "POST":
         role = request.POST['role']
         print(role)
@@ -100,24 +99,24 @@ def hr_profile(request):
                 'user': user,
                 'designation':designation,
                 'emp': emp,
-                'session': session,
                 'att': att,
              }
             return render (request,'hrprofile.html',context)
         else:
-            return render(request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp,'session':session,'att':att})
+            return render(request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp,'att':att})
 
     elif request.method == 'GET':
-        return render (request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp,'session':session,'att':att})
+        return render (request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp,'att':att})
     else:
         return HttpResponse('An Exception Occurred')
 
 
 @login_required(login_url="/att_sys/login/")
 def user_profile(request,id):
-    print("In User profile ")
+    print("In user_profile =====> ")
     user = Attendance.objects.filter(employee_id = id).order_by('date')
     emp = Employee.objects.get(id=id)
+    print ('Employee in user_profile =====>',emp)
     dwh = {}
     for i in user:
         t1 = i.chin
@@ -147,7 +146,7 @@ def user_profile(request,id):
         todate = request.POST['todate']
         print(fromdate,todate)
         user = Attendance.objects.filter(Q(employee_id = id) & Q(date__gte=fromdate) & Q(date__lte=todate)).order_by('date')
-        print(user,'--------------------------------------')
+        print(user,'=====>')
         context['user'] = user
         print(context)
         return render(request, "userprofile.html", context)
@@ -158,15 +157,16 @@ def user_profile(request,id):
 
 @login_required(login_url="/att_sys/login/")
 def update(request,id):
-    print ("In Update")
+    print ("In update =====>")
     att = Attendance.objects.get(id = id)
     emp = Employee.objects.get(id=att.employee.id)
+    print('Employee in update =====>',emp)
     id_user = att.employee.id
-    print(emp,'------>')
     if request.method == "POST":
         fm = forms.Update(request.POST)
-        print (fm,'------>')
+        print ('POST Update form =====>',fm)
         if fm.is_valid():
+            print ('UpateForm is valid  =====>')
             date = request.POST['date']
             chin = request.POST['chin']
             chout = request.POST['chout']
@@ -176,19 +176,13 @@ def update(request,id):
             return HttpResponseRedirect(f"/att_sys/hrprofile/userprofile/{id_user}")
     else:
         fm = forms.Update(instance = att)
-        print(fm)
+        print('GET Update form =====>',fm)
     return render(request,"update.html",{'name': request.user,'form': fm , 'id_user':id_user})
 
 
 @login_required(login_url="/att_sys/login/")
-def success(request, id):
-    user = Employee.objects.get(id=id)
-    print("In success")
-    return render(request, "success.html",{'user':user})
-
-
-@login_required(login_url="/att_sys/login/")
 def delete(request, id):
+    print('In delete =====>')
     user = Employee.objects.get(id=id)
     user.delete()
     return HttpResponseRedirect(reverse('hrprofile'))
@@ -196,6 +190,7 @@ def delete(request, id):
 
 @login_required(login_url="/att_sys/login/")
 def delete_att(request,id):
+    print('In delete_att =====>')
     att = Attendance.objects.get(id=id)
     id_user = att.employee.id
     print(id_user)
@@ -205,24 +200,26 @@ def delete_att(request,id):
 
 @login_required(login_url="/att_sys/login/")
 def add(request):
-
+        print('In add =====>')
         today = datetime.datetime.now ().date ()
         emp = Employee.objects.get(user = request.user)
-        print(emp,'------>')
-        print(emp.user.role,'------>')
+        print('Employee in add =====>',emp)
+        print('Role in add =====>',emp.user.role)
         att = Attendance.objects.filter(Q(employee = emp.id) & Q(date = today))
         if request.method == "POST":
             fm = forms.Add(request.POST)
+            print ('Form in add POST =====>',fm)
             if fm.is_valid ():
+                print ('AddForm is valid  =====>')
                 date = request.POST.get ('date')
                 chin = request.POST.get ('chin')
                 chout = request.POST.get ('chout')
                 if att:
                     for i in att:
-                        print("checkout")
+                        print("In checkout =====>")
                         Attendance.objects.filter(id=i.id).update(chout=chout)
                 else:
-                    print ("checkin")
+                    print ("In checkin =====>")
                     user = Attendance (employee = emp,date = date,chin = chin)
                     user.save ()
                 messages.success (request,"Successfully Add!")
@@ -230,20 +227,19 @@ def add(request):
 
         else:
             fm = forms.Add ()
-            print (fm)
+            print ('Form in add GET =====>',fm)
         return render (request,"add.html",{'name': request.user,'form': fm,'emp': emp,'att':att})
 
 
 @login_required(login_url="/att_sys/login/")
 def user_personal(request,id):
+    print ("In user_personal =====>")
     today = datetime.datetime.now ().date ()
-    session = request.session['count']
     emp = Employee.objects.get(user = request.user)
+    print ('Employee in user_personal =====>',emp)
     att = Attendance.objects.filter (Q (employee = emp) & Q (date = today))
-    print('session :--------',request.session.get('count'))
 
     if emp.id == id:
-        print("In User profile")
         user = Attendance.objects.filter(employee_id = id).order_by('date')
         dwh = {}
         for i in user:
@@ -268,7 +264,6 @@ def user_personal(request,id):
             'emp': emp,
             'dwh': dwh,
             'twh': twh,
-            'session': session,
             'att': att,
         }
         return render(request, "userpersonal.html", context)
@@ -309,6 +304,7 @@ def user_personal(request,id):
 
 
 # hr_profile without checkin implementation
+
         # @csrf_exempt
         # @login_required(login_url="/att_sys/login/")
         # def hr_profile(request):
