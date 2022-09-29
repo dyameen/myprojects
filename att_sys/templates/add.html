@@ -94,7 +94,7 @@
                             {% if messages %}
                                 {% for message in messages %}
                                     <small {% if message.tags %} class="{{message.tags}}" {%endif%}>{{message}}</small>
-                                {%endfor%}
+                                {% endfor %}
                             {%endif%}
 
                             <form  method="POST" novalidate>

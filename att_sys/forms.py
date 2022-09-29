@@ -1,6 +1,4 @@
 from django import forms
-from django.contrib.auth import authenticate
-from django.core import validators
 
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm
@@ -27,6 +25,7 @@ class Update (forms.ModelForm):
             'chout': 'Check-out Time:',
         }
 
+
 def check_chin(value):
     if value == ' ':
         raise forms.ValidationError ("Invalid Check-In Time.")
@@ -52,4 +51,3 @@ class Add (forms.ModelForm):
             'chin': 'Check-in Time:',
             'chout': 'Check-out Time:',
         }
-
