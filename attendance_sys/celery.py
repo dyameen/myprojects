@@ -36,6 +36,6 @@ app.conf.beat_schedule = {
                     'schedule':crontab(0, 0, day_of_month='1'),
                     #'schedule': crontab (minute = '*/5'),
 
-        },
+        }, 
 
 }
