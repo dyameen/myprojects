@@ -8,7 +8,6 @@ urlpatterns = [
     path("login/",views.loginform,name = "login"),
     path("logout/",views.logout_profile,name = "logout"),
     path("hrprofile/userprofile/<int:id>/",views.user_profile,name = "userprofile"),
-    path("hrprofile/userprofile/<int:id>/success",views.success,name = "userprofilesuccess"),
     path("hrprofile/",views.hr_profile,name = "hrprofile"),
     path('hrprofile/delete/<int:id>/',views.delete,name = 'delete'),
     path('hrprofile/userprofile/deleteatt/<int:id>',views.delete_att,name = 'deleteatt'),

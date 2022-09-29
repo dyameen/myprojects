@@ -9,7 +9,7 @@ class SiteUSerAdmin (admin.ModelAdmin):
 
 @admin.register (Employee)
 class EmployeeAdmin (admin.ModelAdmin):
-    list_display = ('id','user','designation')
+    list_display = ('id','user','designation','autochout')
 
 
 @admin.register (Attendance)

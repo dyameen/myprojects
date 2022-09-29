@@ -86,27 +86,37 @@ def hr_profile(request):
     today = datetime.datetime.now ().date ()
     att = Attendance.objects.filter (Q (employee = emp) & Q (date = today))
     designation = set()
+    ename = set ()
     for i in user:
         designation.add(i.designation)
+        ename.add (i.ename)
     designation = list(designation)
     print ('Designation =====>',designation)
+    ename = list(ename)
+    print ('ename =====>',ename)
+
     if request.method == "POST":
         role = request.POST['role']
+        get_ename = request.POST['ename']
+        user = Employee.objects.all ()
         print(role)
-        if role:
-            user = Employee.objects.filter(designation = role)
-            context = {
-                'user': user,
-                'designation':designation,
-                'emp': emp,
-                'att': att,
-             }
-            return render (request,'hrprofile.html',context)
-        else:
-            return render(request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp,'att':att})
+        print (get_ename)
+        if role and get_ename:
+            user = Employee.objects.filter (Q (designation = role) & Q (ename = get_ename))
+        elif role or get_ename:
+            user = Employee.objects.filter (Q (designation = role) | Q (ename = get_ename))
+
+        context = {
+            'user': user,
+            'designation':designation,
+            'emp': emp,
+            'att': att,
+            'ename': ename,
+         }
+        return render(request,'hrprofile.html',context)
 
     elif request.method == 'GET':
-        return render (request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp,'att':att})
+        return render(request,'hrprofile.html',{'user': user,'designation':designation,'emp':emp,'att':att,'ename':ename})
     else:
         return HttpResponse('An Exception Occurred')
 
@@ -227,7 +237,6 @@ def add(request):
 
         else:
             fm = forms.Add ()
-            print ('Form in add GET =====>',fm)
         return render (request,"add.html",{'name': request.user,'form': fm,'emp': emp,'att':att})
 
 

@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from pathlib import Path
+import environ
+
+env = environ.Env ()
+environ.Env.read_env ()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
+    'django_celery_beat',
     'att_sys',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +138,24 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+# celery settings
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_ACCEPT_CONTENT= ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+
+# celery beat settings
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+# FOR E-MAIL
+EMAIL_USER_SSL = False
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env ('EMAIL_HOST')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env ('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env ('EMAIL_HOST_PASSWORD')

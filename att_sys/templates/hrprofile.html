@@ -105,13 +105,20 @@
                                     {% for i in designation %}
                                     <option value={{i}}>{{i}}</option>
                                     {% endfor %}
-                                </select>
+                            </select>
+                            <select name="ename">
+                                    <option value="" selected="selected">All</option>
+                                    {% for i in ename %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                            </select>
+
                             <button class="det1" type="submit">Filter</button>
                         </form>
                         {% if att|length == 0 %}
-                         <a class="det1" style="margin-left:850px" href="/att_sys/userpersonal/add/">Check-in</a>
+                         <a class="det1" style="margin-left:765px" href="/att_sys/userpersonal/add/">Check-in</a>
                         {%else%}
-                        <a class="det1" style="margin-left:850px" href="/att_sys/userpersonal/add/">Check-out</a>
+                        <a class="det1" style="margin-left:765px" href="/att_sys/userpersonal/add/">Check-out</a>
                         {%endif%}
                     </div>
                     <div>
@@ -124,7 +131,8 @@
 
                     </div>
                     <div style="overflow-x: auto; margin: auto;">
-                    <table class= "styled-table" border="1">
+                        {% if user  %}
+                        <table class= "styled-table" border="1">
                         <tr>
                             <th>ID</th>
                             <th>Employee name</th>
@@ -140,6 +148,9 @@
                         </tr>
                         {% endfor %}
                     </table>
+                        {% else %}
+                                <h1> User Not Found </h1>
+                        {%endif%}
                     </div>
 
                 </div>

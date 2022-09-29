@@ -24,6 +24,7 @@ class Employee(models.Model):
     ename = models.CharField(max_length = 100)
     eemail = models.EmailField(max_length = 255,blank = False,unique = True)
     city = models.CharField(max_length = 255)
+    autochout = models.IntegerField(default = 0,null = False)
 
     def __str__ (self):
         return self.ename

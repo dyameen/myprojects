@@ -1143,10 +1143,11 @@ button:focus:not(:focus-visible) {
 
         .inline{
           display: inline-flex;
+          align-items: center
+
 
         }
 
         .div1{
            display: -webkit-inline-box;
-           float:auto;
         }
