@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+
 class SiteUser(AbstractUser):
     role_types = (("Admin","Admin"),("HR","HR"),("NormalUser","NormalUser"))
     role = models.CharField(max_length = 15,choices = role_types)
@@ -31,4 +32,4 @@ class Attendance(models.Model):
     date = models.DateField(default = datetime.date.today(),null=True)
     chin = models.TimeField(null = True, blank=True)
     chout = models.TimeField(null = True, blank=True)
-    remarks = models.CharField(max_length = 255,blank = True)
+    remarks = models.CharField(max_length = 255,null = True,blank = True)

@@ -209,16 +209,20 @@ def add(request):
                 date = request.POST.get ('date')
                 chin = request.POST.get ('chin')
                 chout = request.POST.get ('chout')
+                remarks = request.POST.get('remarks')
                 if att:
                     for i in att:
                         print("In checkout =====>")
-                        Attendance.objects.filter(id=i.id).update(chout=chout)
+                        Attendance.objects.filter(id=i.id).update(chout=chout,remarks= remarks)
                 else:
                     print ("In checkin =====>")
-                    user = Attendance (employee = emp,date = date,chin = chin)
+                    user = Attendance (employee = emp,date = date,chin = chin,remarks = "Remains")
                     user.save ()
                 messages.success (request,"Successfully Add!")
                 return HttpResponseRedirect (f'/att_sys/userpersonal/{emp.id}',{'form': fm,'att':att})
+            else:
+                print('--------------> data ',fm)
+                return HttpResponseRedirect (f'/att_sys/userpersonal/{emp.id}',{'form': fm,'att': att})
 
         else:
             fm = forms.Add ()
@@ -332,65 +336,66 @@ def user_personal(request,id):
         #     request.session['count'] = 0
         #     request.session.modified = True
 
-def test_vue(request,id):
-    print ("In user_personal =====>")
-    today = datetime.datetime.now ().date ()
-    emp = Employee.objects.get (user = request.user)
-    print ('Employee in user_personal =====>',emp)
-    att = Attendance.objects.filter (Q (employee = emp) & Q (date = today)).values()
-    data = [i for i in att]
-
-    for i in data:
-        i["date"] = str(i["date"])
-        i["chin"] = str (i["chin"])
-        i["chout"] = str (i["chout"])
-
-    att = json.dumps(data)
-    print('data ---------------->',data)
-    print('------------------>attttttttttt',att)
-    if emp.id == id:
-        user = Attendance.objects.filter (employee_id = id).order_by ('date').values ()
-        user_data = [i for i in user]
-
-        for i in user_data:
-            i["date"] = str (i["date"])
-            i["chin"] = str (i["chin"])
-            i["chout"] = str (i["chout"])
-
-        user = json.dumps(user_data)
-        print('userrrrrrrrrrrrrrrrrrrrrrrr---------------->',user)
-        user = json.loads(user)
-        print('nnnnnnnnnnnnnnnnnnnnnnnnnnn=====>', user)
-        dwh = {}
-        for i in user:
-            t1 = i['chin']
-            t2 = i['chout']
-            # import dateutil.parser
-            # t1 = dateutil.parser.parse (t1)
-            # t2 = dateutil.parser.parse (t2)
-            t1 = datetime.datetime.strptime (t1,"%H:%M:%S")
-            t2 = datetime.datetime.strptime (t2,"%H:%M:%S")
-            if i['chin'] and i['chin']:
-                t1_datetime = datetime.datetime.combine (datetime.datetime.today (),t1.time())
-                t2_datetime = datetime.datetime.combine (datetime.datetime.today (),t2.time())
-                diff = t2_datetime - t1_datetime
-                wh = int (diff.total_seconds () / 3600)
-                dwh[i['id']] = wh
-
-            else:
-                wh = 0
-                dwh[i['id']] = wh
-
-        twh = sum (dwh.values ())
-        context = {
-            'user': user,
-            'name': request.user,
-            'emp': emp,
-            'dwh': dwh,
-            'twh': twh,
-            'att': att,
-        }
-        return render (request,'vue_app/test.html')
-    else:
-        return render (request,'vue_app/test.html')
-
+# for creating Json data:
+# def test_vue(request,id):
+#     print ("In user_personal =====>")
+#     today = datetime.datetime.now ().date ()
+#     emp = Employee.objects.get (user = request.user)
+#     print ('Employee in user_personal =====>',emp)
+#     att = Attendance.objects.filter (Q (employee = emp) & Q (date = today)).values()
+#     data = [i for i in att]
+#
+#     for i in data:
+#         i["date"] = str(i["date"])
+#         i["chin"] = str (i["chin"])
+#         i["chout"] = str (i["chout"])
+#
+#     att = json.dumps(data)
+#     print('data ---------------->',data)
+#     print('------------------>attttttttttt',att)
+#     if emp.id == id:
+#         user = Attendance.objects.filter (employee_id = id).order_by ('date').values ()
+#         user_data = [i for i in user]
+#
+#         for i in user_data:
+#             i["date"] = str (i["date"])
+#             i["chin"] = str (i["chin"])
+#             i["chout"] = str (i["chout"])
+#
+#         user = json.dumps(user_data)
+#         print('userrrrrrrrrrrrrrrrrrrrrrrr---------------->',user)
+#         user = json.loads(user)
+#         print('nnnnnnnnnnnnnnnnnnnnnnnnnnn=====>', user)
+#         dwh = {}
+#         for i in user:
+#             t1 = i['chin']
+#             t2 = i['chout']
+#             # import dateutil.parser
+#             # t1 = dateutil.parser.parse (t1)
+#             # t2 = dateutil.parser.parse (t2)
+#             t1 = datetime.datetime.strptime (t1,"%H:%M:%S")
+#             t2 = datetime.datetime.strptime (t2,"%H:%M:%S")
+#             if i['chin'] and i['chin']:
+#                 t1_datetime = datetime.datetime.combine (datetime.datetime.today (),t1.time())
+#                 t2_datetime = datetime.datetime.combine (datetime.datetime.today (),t2.time())
+#                 diff = t2_datetime - t1_datetime
+#                 wh = int (diff.total_seconds () / 3600)
+#                 dwh[i['id']] = wh
+#
+#             else:
+#                 wh = 0
+#                 dwh[i['id']] = wh
+#
+#         twh = sum (dwh.values ())
+#         context = {
+#             'user': user,
+#             'name': request.user,
+#             'emp': emp,
+#             'dwh': dwh,
+#             'twh': twh,
+#             'att': att,
+#         }
+#         return render (request,'vue_app/test.html')
+#     else:
+#         return render (request,'vue_app/test.html')
+#

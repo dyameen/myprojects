@@ -893,7 +893,7 @@ button:focus:not(:focus-visible) {
             box-shadow:5px 5px 5px grey;
 
         }
-        input {
+        input , textarea {
                   caret-color: red;
                   display: block;
                 }
@@ -902,7 +902,7 @@ button:focus:not(:focus-visible) {
           margin-top: 30px;
         }
 
-        label, input, button {
+        label, input, button  {
           width: 100%;
           display: inline-block;
           padding: 0;
@@ -924,7 +924,7 @@ button:focus:not(:focus-visible) {
           color: gray;
         }
 
-        input {
+        input  {
           background: #ecf0f3;
           padding: 10px;
           padding-left: 20px;

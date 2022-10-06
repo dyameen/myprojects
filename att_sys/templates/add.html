@@ -97,7 +97,7 @@
                                 {% endfor %}
                             {%endif%}
 
-                            <form  method="POST" novalidate>
+                            <form  method="POST" >
                                         <!-- Very Important csrf Token -->
                                         {% csrf_token %}
                                         {% for fm in form %}
@@ -105,7 +105,7 @@
                                         {% if att|length == 0 %}
                                             {% if fm.name == 'date' %}
                                                 {{fm.label}}{{fm}}
-
+                                            <br>
                                             {% elif fm.name == 'chin' %}
                                                 {{fm.label}}{{fm}}
 
@@ -113,16 +113,20 @@
                                         {% else %}
                                             {% if fm.name == 'date' %}
                                                 {{fm.label}}{{fm}}
-
+                                            <br><br>
                                             {% elif fm.name == 'chout' %}
                                                 {{fm.label}}{{fm}}
+                                            <br><br>
+                                            {% elif fm.name == 'remarks' %}
+                                                {{fm.label}}{{fm}}
+                                                {{fm.errors}}
 
                                             {% endif %}
 
                                         {% endif %}
 
                                         {% endfor %}
-                                <br><br>
+                                <br>
                                     <button class="button" type="submit">Submit</button>
                             </form>
 <!--                            <form  method="POST" novalidate>-->
