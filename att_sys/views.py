@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -19,6 +20,7 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 
+
 def index(request):
     return render(request, "index.html")
 
@@ -34,23 +36,11 @@ def loginform(request):
             un = fm.cleaned_data['username']
             pwd = fm.cleaned_data['password']
             user = authenticate(username=un, password=pwd)
-            get_user = SiteUser.objects.get(username = un)
-            last_login_date = get_user.last_login
+
             if user is not None:
                 print("User id is =====> ", user.id)
                 login(request, user)
-                today = datetime.datetime.now().date()
-                print("today =====>",today)
-                print("last_login =====>",last_login_date.date())
-                if last_login_date.date() == today:
-                    request.session['count'] = 1
-                    request.session.modified = True
-                else:
-                    request.session['count'] = 0
-                    request.session.modified = True
-
                 print("After login User role is =====> ", user.role)
-                print(request.user.role,' =====>')
                 messages.success(request, "login Successful!")
                 if request.user.role == "Admin":
                     return HttpResponseRedirect('/admin/')
@@ -69,7 +59,6 @@ def loginform(request):
 def logout_profile(request):
     print("In logout  =====>")
     logout(request)
-
     return render(request, "index.html")
 
 
@@ -274,6 +263,7 @@ def user_personal(request,id):
     else:
         return HttpResponseRedirect('/att_sys/login/')
 
+
     # add view using session
 
         # session = request.session['count']
@@ -326,3 +316,81 @@ def user_personal(request,id):
         #         "designation":designation,
         #     }
         #     return render(request, "hrprofile.html", context)
+
+# loginform using session
+
+        # get_user = SiteUser.objects.get(username = un)
+        # last_login_date = get_user.last_login
+
+        # today = datetime.datetime.now().date()
+        # print("today =====>",today)
+        # print("last_login =====>",last_login_date.date())
+        # if last_login_date.date() == today:
+        #     request.session['count'] = 1
+        #     request.session.modified = True
+        # else:
+        #     request.session['count'] = 0
+        #     request.session.modified = True
+
+def test_vue(request,id):
+    print ("In user_personal =====>")
+    today = datetime.datetime.now ().date ()
+    emp = Employee.objects.get (user = request.user)
+    print ('Employee in user_personal =====>',emp)
+    att = Attendance.objects.filter (Q (employee = emp) & Q (date = today)).values()
+    data = [i for i in att]
+
+    for i in data:
+        i["date"] = str(i["date"])
+        i["chin"] = str (i["chin"])
+        i["chout"] = str (i["chout"])
+
+    att = json.dumps(data)
+    print('data ---------------->',data)
+    print('------------------>attttttttttt',att)
+    if emp.id == id:
+        user = Attendance.objects.filter (employee_id = id).order_by ('date').values ()
+        user_data = [i for i in user]
+
+        for i in user_data:
+            i["date"] = str (i["date"])
+            i["chin"] = str (i["chin"])
+            i["chout"] = str (i["chout"])
+
+        user = json.dumps(user_data)
+        print('userrrrrrrrrrrrrrrrrrrrrrrr---------------->',user)
+        user = json.loads(user)
+        print('nnnnnnnnnnnnnnnnnnnnnnnnnnn=====>', user)
+        dwh = {}
+        for i in user:
+            t1 = i['chin']
+            t2 = i['chout']
+            # import dateutil.parser
+            # t1 = dateutil.parser.parse (t1)
+            # t2 = dateutil.parser.parse (t2)
+            t1 = datetime.datetime.strptime (t1,"%H:%M:%S")
+            t2 = datetime.datetime.strptime (t2,"%H:%M:%S")
+            if i['chin'] and i['chin']:
+                t1_datetime = datetime.datetime.combine (datetime.datetime.today (),t1.time())
+                t2_datetime = datetime.datetime.combine (datetime.datetime.today (),t2.time())
+                diff = t2_datetime - t1_datetime
+                wh = int (diff.total_seconds () / 3600)
+                dwh[i['id']] = wh
+
+            else:
+                wh = 0
+                dwh[i['id']] = wh
+
+        twh = sum (dwh.values ())
+        context = {
+            'user': user,
+            'name': request.user,
+            'emp': emp,
+            'dwh': dwh,
+            'twh': twh,
+            'att': att,
+        }
+        return render (request,'vue_app/test.html')
+    else:
+        return render (request,'vue_app/test.html')
+

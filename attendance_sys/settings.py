@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',
     'django_celery_beat',
+    'rest_framework',
     'att_sys',
     'django_extensions',
 ]
@@ -156,3 +157,18 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env ('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env ('EMAIL_HOST_PASSWORD')
+
+# rest API
+REST_FRAMEWORK = {
+     'DEFAULT_AUTHENTICATION_CLASSES': [
+         #'rest_framework.authentication.TokenAuthentication',
+         #'knox.auth.TokenAuthentication',
+         'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.DjangoModelPermissions',
+    ]
+}
