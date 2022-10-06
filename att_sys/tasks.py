@@ -1,32 +1,10 @@
 from celery import shared_task
 from django.db.models import Q
-from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
-from datetime import datetime,timedelta
+from datetime import datetime
 from .models import *
 from django.core.mail import send_mail
 from django.conf import settings
 
-
-
-from time import sleep
-
-
-# from django.core.mail import send_mail
-
-# @shared_task
-# def sleepy(duration):
-#     sleep(duration)
-#     return None
-#
-# @shared_task
-# def send_mail_task():
-#     send_mail("Celery test",
-#               "Celery Worked!!!",
-#               "yameenvi.dev@gmail.com",
-#               ['yameendasadiya93@gmail.com'],
-#               fail_silently = False
-#               )
-#     return None
 
 def send_mail_task(subject,msg,recipient_list):
     send_mail(
@@ -43,14 +21,13 @@ def auto_checkout():
     today = str(datetime.datetime.now().date())
     now = datetime.datetime.now()
     att = Attendance.objects.filter(Q(date = today) & Q(chout = None))
-    emp = Employee.objects.all()
 
     for i in att:
-        print(i)
-        print (i.employee.autochout)
+        print("Attendance id =====>",i)
+        print ("AutoCheckOut Count =====>",i.employee.autochout)
 
         if i.employee.autochout <= 3:
-            print('In if',i.employee.autochout)
+            print('In if AutoCheckOut Count =====>',i.employee.autochout)
             Attendance.objects.filter(id=i.id).update(chout = now)
             Employee.objects.filter(id=i.employee.id).update(autochout= i.employee.autochout+1 )
             send_mail_task("Auto CheckOut WARNING!",f"You are auto-checked out {i.employee.autochout} time.",i.employee.eemail)
@@ -65,11 +42,10 @@ def auto_checkout():
 @shared_task
 def reload_autochout():
     emp = Employee.objects.filter(autochout__gte = 1)
-
     for i in emp:
         Employee.objects.filter (id = i.id).update(autochout = 0)
-
     return None
+
 
 @shared_task
 def auto_reload ():

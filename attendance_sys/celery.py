@@ -13,6 +13,7 @@ app.autodiscover_tasks()
 
 app.conf.update(timezone = 'Asia/Kolkata')
 
+
 @app.task(bind=True)
 def debug_task(self):
     print(f'Request: {self.request!r}')
@@ -23,7 +24,7 @@ app.conf.beat_schedule = {
         'AutoCheckOut': {
             'task': 'att_sys.tasks.auto_checkout',
             'schedule': crontab(minute="0", hour="0", day_of_week="mon-fri"),
-            #'schedule':crontab(minute='*/1'),
+            # 'schedule':crontab(minute='*/1'),
         },
 
         'AutoReload': {
@@ -32,9 +33,9 @@ app.conf.beat_schedule = {
 
         },
         'ReloadAutoChout': {
-                    'task': 'att_sys.tasks.reload_autochout',
-                    'schedule':crontab(0, 0, day_of_month='1'),
-                    #'schedule': crontab (minute = '*/5'),
+            'task': 'att_sys.tasks.reload_autochout',
+            'schedule':crontab(0, 0, day_of_month='1'),
+            # 'schedule': crontab (minute = '*/5'),
 
         }, 
 

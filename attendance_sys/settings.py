@@ -9,8 +9,6 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
-from pathlib import Path
 from pathlib import Path
 import environ
 
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',
     'django_celery_beat',
+    'rest_framework',
     'att_sys',
     'django_extensions',
 ]
@@ -112,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -140,11 +138,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 # celery settings
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 CELERY_TIMEZONE = 'Asia/Kolkata'
-CELERY_ACCEPT_CONTENT= ['application/json']
+CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 
@@ -159,3 +157,18 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env ('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env ('EMAIL_HOST_PASSWORD')
+
+# rest API
+REST_FRAMEWORK = {
+     'DEFAULT_AUTHENTICATION_CLASSES': [
+         #'rest_framework.authentication.TokenAuthentication',
+         #'knox.auth.TokenAuthentication',
+         'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.DjangoModelPermissions',
+    ]
+}
