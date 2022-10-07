@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import *
 
 urlpatterns = [
 
@@ -13,6 +14,7 @@ urlpatterns = [
     path('hrprofile/userprofile/update/<int:id>',views.update,name = 'update'),
     path("userpersonal/<int:id>/",views.user_personal,name = "userpersonal"),
     path('userpersonal/add/',views.add,name = 'addrecord'),
-   # path ('test/<int:id>/',views.test_vue, name = 'testvue'),
+    path ('test/',views.test_vue, name = 'testvue'),
+    path ("api/all/",showall.as_view (),name = "all"),
 
 ]

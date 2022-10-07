@@ -109,11 +109,11 @@
                                     <th>Check-out</th>
                                     <th>Working-Hours</th>
                                 </tr></div>
-                        <div v-for="x in info" class="currency">
+                        <div v-for="x in list" v-bind:key='x.id' id="app">
                                 <tr>
-                                    <td> {{x.ename}}</td>
-                                    <td>{{x.date}} </td>
-                                    <td>{{x.chin}}</td>
+                                    <td> [[x.id]]</td>
+                                    <td>[[x.ename]] </td>
+                                    <td>[[x.chin]]</td>
                                     <td>[[ x.chout ]]</td>
                                     <td>[[ dwh|get_item:x.id ]]</td>
                                 </tr>
@@ -201,26 +201,26 @@
         <script src="/static/js/magnific-popup-options.js"></script>
         <script src="/static/js/click-scroll.js"></script>
         <script src="/static/js/custom.js"></script>
-        <script>
-                import axios from "axios"
+       <script>
+            import axios from "axios"
 
-                export default {
-                    name: 'EmpList',
-                    data(){
-                        return {
-                            list : undefined
-                        }
-                    },
-                    mounted()
-                    {
-                        axios.get('https://dummy.restapiexample.com/api/v1/employees')
-                        .then(resp =>{
-                            this.list = resp.data.data
-                            console.log(resp.data.data)
-                        })
+            var app = new Vue({
+            el: '#app',
+            delimiters: ["[[", "]]"],
+            data: {
+                return:{
+                 list: []
                     }
+                    },
+            mounted()
+                {
+                    axios.get('http://127.0.0.1:8000/att_sys/api/all/')
+                    .then(resp =>{
+                        this.list = resp.data.data
+                        console.log(resp.data.data)
+                    })
                 }
+            }
         </script>
-
   </body>
 </html>
