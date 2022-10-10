@@ -181,15 +181,16 @@ def update (request,id):
 
 
 @login_required (login_url = "/att_sys/login/")
-def delete (id):
+def delete (request,id):
     print ('In delete =====>')
     user = Employee.objects.get (id = id)
+    print('------->',user)
     user.delete ()
     return HttpResponseRedirect (reverse ('hrprofile'))
 
 
 @login_required (login_url = "/att_sys/login/")
-def delete_att (id):
+def delete_att (request,id):
     print ('In delete_att =====>')
     att = Attendance.objects.get (id = id)
     id_user = att.employee.id
