@@ -1,0 +1,8 @@
+attendance_env
+celerybeat-schedule.*
+db.sqlite3
+__pycache__
+*.log
+*.pot
+*.pyc
+attendance_sys/.env

@@ -1,7 +1,7 @@
 import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+import django
 
 
 class SiteUser(AbstractUser):
@@ -29,7 +29,7 @@ class Employee(models.Model):
 
 class Attendance(models.Model):
     employee = models.ForeignKey(Employee,on_delete = models.CASCADE, related_name = 'emp_attendance')
-    date = models.DateField(default = datetime.date.today(),null=True)
+    date = models.DateField(default=django.utils.timezone.now,null=True)
     chin = models.TimeField(null = True, blank=True)
     chout = models.TimeField(null = True, blank=True)
     remarks = models.CharField(max_length = 255,null = True,blank = True)

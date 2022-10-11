@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-11%ep-xmu$9v8ad^q^2)1_ojxlvuq#2j=6-%-$e%)-w%%^ed_r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['13.233.232.207','127.0.0.1']
+
+STATIC_ROOT = '/att_sys/static/'
 
 
 # Application definition
@@ -86,12 +88,34 @@ WSGI_APPLICATION = 'attendance_sys.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'attendance_db',
+        'USER': 'root',
+        'PASSWORD':'',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
+# DATABASES = {
+# 'default': {
+# 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+# 'NAME': 'attendance_db',
+# 'USER' : 'postgres',
+# 'PASSWORD' : '',
+# 'HOST' : 'localhost',
+# 'PORT' : '5452',
+# }
+# }
 
 
 # Password validation
